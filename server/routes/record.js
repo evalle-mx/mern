@@ -17,7 +17,8 @@ recordRoutes.route('/record')
     .get( function (req, res) {
         let db_connect = dbo.getDb('employees');
         db_connect
-            .collection('records')
+            //.collection('records')
+            .collection(process.env.COLLECTION)
             .find( {} )
             .toArray( function (err, result) {
                 if(err) throw err;
@@ -31,7 +32,8 @@ recordRoutes.route('/record/:id')
         let db_connect = dbo.getDb();
         let myquery = { _id: ObjectId( req.params.id )};
         db_connect
-            .collection('records')
+            //.collection('records')
+            .collection(process.env.COLLECTION)
             .findOne( myquery, function(err, result){
                 if(err) throw err;
                 res.json(result );
@@ -48,7 +50,8 @@ recordRoutes.route('/record/add')
             level: req.body.level,
         };
         db_connect
-            .collection('records')
+            //.collection('records')
+            .collection(process.env.COLLECTION)
             .insertOne(myObj, function(err, result){
                 if(err) throw err;
                 res.json(result);
@@ -69,7 +72,8 @@ recordRoutes.route('/update/:id')
             }, 
            };
         db_connect
-           .collection("records")
+           //.collection("records")
+            .collection(process.env.COLLECTION)
            .updateOne(myquery, newvalues, function (err, result) {
              if (err) throw err;
              console.log("1 document updated");
@@ -83,7 +87,8 @@ recordRoutes.route('/:id')
         let db_connect = dbo.getDb();
         let myquery = { _id: ObjectId( req.params.id )}; 
         db_connect
-            .collection('records')
+            //.collection('records')
+            .collection(process.env.COLLECTION)
             .deleteOne(myquery, function(err, obj){
                 if(err) throw err;
                 console.log('1 document deleted');
