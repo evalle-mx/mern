@@ -11,6 +11,7 @@ var _db;
 module.exports ={
     connectToServer: function (callback) {
         client.connect( function (err, db){
+            console.log(process.env.ATLAS_URI);
             //verify we got a good 'db' object
             if(db){
                 //_db = db.db('employees');
