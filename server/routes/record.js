@@ -15,7 +15,9 @@ const ObjectId = require('mongodb').ObjectId;
 // This section will help you get a list of all the records.
 recordRoutes.route('/record')
     .get( function (req, res) {
-        let db_connect = dbo.getDb('employees');
+        console.log('<get> requesting records');
+        // let db_connect = dbo.getDb('employees');
+        let db_connect = dbo.getDb();
         db_connect
             //.collection('records')
             .collection(process.env.COLLECTION)
@@ -29,6 +31,7 @@ recordRoutes.route('/record')
 // This section will help you GET a single record by id
 recordRoutes.route('/record/:id')
     .get( function(req, res) {
+        console.log(`<read> requesting 1 record by id ${req.params.id}`);
         let db_connect = dbo.getDb();
         let myquery = { _id: ObjectId( req.params.id )};
         db_connect
@@ -44,6 +47,7 @@ recordRoutes.route('/record/:id')
 recordRoutes.route('/record/add')
     .post( function (req, res) {
         let db_connect = dbo.getDb();
+        console.log('<post> adding record');
         let myObj = {
             name: req.body.name,
             position: req.body.position,
@@ -59,8 +63,9 @@ recordRoutes.route('/record/add')
     });
 
 // This section will help you UPDATE a record by id.
-recordRoutes.route('/update/:id')
+recordRoutes.route('/record/upd/:id')
     .post( function (req, res) {
+        console.log(`<post> updating record id: ${req.params.id}`);
         let db_connect = dbo.getDb();
         let myquery = { _id: ObjectId( req.params.id )}; 
 
@@ -82,8 +87,9 @@ recordRoutes.route('/update/:id')
     });
 
 // This section will help you DELETE a record
-recordRoutes.route('/:id')
+recordRoutes.route('/record/del/:id')
     .delete( function(req, res){
+        console.log(`<delete> removing record id: ${req.params.id}`);
         let db_connect = dbo.getDb();
         let myquery = { _id: ObjectId( req.params.id )}; 
         db_connect
